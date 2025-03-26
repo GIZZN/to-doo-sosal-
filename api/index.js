@@ -52,7 +52,7 @@ function authenticateToken(req, res, next) {
 // API Routes
 
 // Получение задач
-app.get('/api/tasks', authenticateToken, async (req, res) => {
+app.get('/tasks', authenticateToken, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM tasksr WHERE userId = $1', [req.user.userId]);
     res.json(result.rows);
@@ -62,7 +62,7 @@ app.get('/api/tasks', authenticateToken, async (req, res) => {
 });
 
 // Удаление задачи
-app.delete('/api/deleteTask', authenticateToken, async (req, res) => {
+app.delete('/deleteTask', authenticateToken, async (req, res) => {
   let { id } = req.body;
   try {
     await pool.query('DELETE FROM tasksr WHERE id = $1 AND userId = $2', [id, req.user.userId]);
@@ -74,7 +74,7 @@ app.delete('/api/deleteTask', authenticateToken, async (req, res) => {
 });
 
 // Создание задачи
-app.post('/api/tasks', authenticateToken, async (req, res) => {
+app.post('/tasks', authenticateToken, async (req, res) => {
   let { text, isChecked } = req.body;
   try {
     await pool.query('INSERT INTO tasksr (text, isChecked, userId) VALUES ($1, $2, $3)', [text, isChecked, req.user.userId]);
@@ -86,7 +86,7 @@ app.post('/api/tasks', authenticateToken, async (req, res) => {
 });
 
 // Регистрация пользователя
-app.post('/api/auth/sign-up', async (req, res) => {
+app.post('/auth/sign-up', async (req, res) => {
   let { username, email, password } = req.body;
   let password_hash = await bcrypt.hash(password, 10);
   try {
@@ -103,7 +103,7 @@ app.post('/api/auth/sign-up', async (req, res) => {
 });
 
 // Аутентификация пользователя
-app.post('/api/auth/sign-in', async (req, res) => {
+app.post('/auth/sign-in', async (req, res) => {
   let { email, password } = req.body;
   try {
     let result = await pool.query('SELECT * FROM usersr WHERE email = $1', [email]);
@@ -132,7 +132,7 @@ app.post('/api/auth/sign-in', async (req, res) => {
 });
 
 // Выход из системы
-app.post('/api/auth/logout', (req, res) => {
+app.post('/auth/logout', (req, res) => {
   res.clearCookie('authToken', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
@@ -142,7 +142,7 @@ app.post('/api/auth/logout', (req, res) => {
 });
 
 // Обновление задачи
-app.put('/api/tasks/:id', authenticateToken, async (req, res) => {
+app.put('/tasks/:id', authenticateToken, async (req, res) => {
   let { currentData } = req.body;
   let { id } = req.params;
   
@@ -163,18 +163,18 @@ app.put('/api/tasks/:id', authenticateToken, async (req, res) => {
 });
 
 // Проверка аутентификации
-app.get('/api/check-auth', authenticateToken, (req, res) => {
+app.get('/check-auth', authenticateToken, (req, res) => {
   res.json({ authenticated: true });
+});
+
+// Добавляем тестовый маршрут для проверки работоспособности API
+app.get('/', (req, res) => {
+  res.json({ status: 'API is working!' });
 });
 
 // Обработчик запросов для serverless функции
 export default async (req, res) => {
-  const parsedUrl = parse(req.url, true);
-  
-  // Создаем mock для запроса и ответа
-  const server = createServer((req, res) => {
-    app(req, res);
-  });
+  console.log('API request received:', req.url);
   
   // Обрабатываем запрос через Express
   app(req, res);

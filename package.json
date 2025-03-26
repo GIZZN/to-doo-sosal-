@@ -1,0 +1,14 @@
+{
+  "name": "todo-full-app",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "build": "cd TodoListFrontend && npm install && npm run build"
+  },
+  "dependencies": {
+    "todo-full-app": "file:"
+  }
+}
