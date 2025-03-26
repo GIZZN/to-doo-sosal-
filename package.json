@@ -6,7 +6,8 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "cd TodoListFrontend && npm install && npm run build"
+    "build": "cd TodoListFrontend && npm install && npm run build",
+    "vercel-build": "npm install && cd TodoListFrontend && npm install && npm run build"
   },
   "dependencies": {
     "todo-full-app": "file:"
