@@ -1,0 +1,36 @@
+:root {
+  --color-purple-100: #e9d5ff;
+  --color-purple-200: #d6bcfa;
+  --color-purple-300: #b794f4;
+  --color-purple-400: #9f7aea;
+  --color-purple-500: #805ad5;
+  --color-purple-600: #6b46c1;
+  --color-purple-700: #553c9a;
+  --color-purple-800: #44337a;
+  --color-purple-900: #322659;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  overflow-x: hidden;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+::selection {
+  background: rgba(159, 122, 234, 0.3);
+}
+
+:focus {
+  outline: none;
+}
