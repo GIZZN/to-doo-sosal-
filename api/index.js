@@ -41,8 +41,8 @@ app.use((req, res, next) => {
 
 // Настройка middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  methods: ['POST', 'GET', 'PUT', 'DELETE'],
+  origin: '*',
+  methods: ['POST', 'GET', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true
 }));
 app.use(express.json());
