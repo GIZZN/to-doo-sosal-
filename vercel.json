@@ -6,15 +6,14 @@
       "src": "TodoListFrontend/package.json", 
       "use": "@vercel/static-build",
       "config": { 
-        "distDir": "dist",
-        "buildCommand": "cd TodoListFrontend && npm install && npm run build"
+        "distDir": "TodoListFrontend/dist"
       }
     }
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/TodoListFrontend/dist/index.html" }
+    { "src": "/(assets|favicon.ico|robots.txt)(.*)", "dest": "/TodoListFrontend/dist/$1$2" },
+    { "src": "/(.*)", "dest": "/TodoListFrontend/dist/index.html" }
   ],
   "env": {
     "NODE_ENV": "production"
