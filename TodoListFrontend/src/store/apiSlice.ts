@@ -1,11 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ITask } from "../types";
 
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 export const apiSlice = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery(
         {
-            baseUrl: 'http://localhost:5000/api',
+            baseUrl: apiUrl,
             prepareHeaders: (headers) => {
                 return headers;
             },
